@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CardChecker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card" id="app">
+
+        <!-- Здесь будет выводиться ЛОГОТИП БАНКА -->
+        <div class="bank">
+            <img v-bind:src=" 'img/banks/' + bankk + '.png' " v-if='bankk'>
+        </div>
+
+        <!-- Поле для ввода НОМЕРА КАРТЫ -->
+        <div class="number-container">
+            <input class ="input" v-bind:class="{'input-ok':input, 'input-err':!input}" type="text" placeholder="Номер карты" v-model="number">
+            <div class="status" v-bind:class="{'status-ok' : status, 'status-err' : !status}" ></div>
+        </div>
+
+        <!-- Поле для ввода ИМЕНИ ДЕРЖАТЕЛЯ -->
+        <div class="name-container">
+            <input type="text" placeholder="Имя держателя">
+            <div class="status"></div>
+        </div>
+
+        <!-- Логотип ПЛАТЕЖНОЙ СИСТЕМЫ -->
+        <div class="pay-system">
+            <img v-bind:src=" 'img/systems/' + paysys + '.png' " v-if="paysys">
+        </div>
+
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    'use strict';
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            number: ''
+        },
+        computed: {
+            paysys(){
+                if(this.number[0] == '2')
+                    return 'mir';
+                if(this.number[0] == '3')
+                    return 'american-exp';
+                if(this.number[0] == '4')
+                    return 'visa';
+                if(this.number[0] == '5')
+                    return 'mastercard';
+                if(this.number[0] == '6')
+                    return 'maestro';
+                }
+            },
+            status(){
+                return this.number.length == 16;
+            },
+            input(){
+                return this.number.length == 16;
+            },
+            bankk(){
+                let sub = substring(1, 6);
+                if(sub == '521178')
+                    return 'mir';
+            }
+    });
+
+    </script>
+</html>
